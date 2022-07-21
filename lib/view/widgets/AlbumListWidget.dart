@@ -1,33 +1,23 @@
 import 'dart:core';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keysoc_coding_test/model/album.dart';
-import 'package:keysoc_coding_test/model/album.dart';
 import 'package:keysoc_coding_test/model/albumList.dart';
-
-import 'package:keysoc_coding_test/view_model/album_view_model.dart';
-import 'package:provider/provider.dart';
 
 class AlbumListWidget extends StatefulWidget {
   final List<Album> _albumList;
   final Function _function;
   final AlbumList _bookMarkList;
 
-
-  AlbumListWidget(this._albumList, this._function,this._bookMarkList);
+  const AlbumListWidget(this._albumList, this._function, this._bookMarkList);
 
   @override
   _AlbumListWidgetState createState() => _AlbumListWidgetState();
 }
 
 class _AlbumListWidgetState extends State<AlbumListWidget> {
-
   Widget _buildSongItem(Album album) {
-
-    Album? _selectedAlbum = Provider.of<AlbumViewModel>(context).album;
     bool isBook = widget._bookMarkList.isContainAlbum(album);
-
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -50,7 +40,7 @@ class _AlbumListWidgetState extends State<AlbumListWidget> {
                 children: <Widget>[
                   Text(
                     //TODO
-                    album.trackName ?? '',
+                    album.artistName ?? '',
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w600,
@@ -62,7 +52,7 @@ class _AlbumListWidgetState extends State<AlbumListWidget> {
                     height: 6,
                   ),
                   Text(
-                    album.artistName ?? '',
+                    album.primaryGenreName ?? '',
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
@@ -84,29 +74,31 @@ class _AlbumListWidgetState extends State<AlbumListWidget> {
                   ),
                 ]),
           ),
+          IconButton(
+              onPressed: isBook
+                  ? () {
+                      print("isinAL = true");
+                      setState(() {
+                        isBook = false;
+                      });
+                      widget._bookMarkList.deleteAlbum(album);
+                    }
+                  : () {
+                      print("isinAL = false");
+                      setState(() {
+                        isBook = true;
+                      });
+                      widget._bookMarkList.addAlbum(album);
 
-            IconButton(onPressed: isBook
-                ?(){
-              print("isinAL = true");
-              setState(() {
-                isBook=false;
-              });
-              widget._bookMarkList.deleteAlbum(album);
-              Provider.of<AlbumViewModel>(context,listen: false).album?.changeBookMark();
-            }
-            :(){
-              print("isinAL = false");
-              setState(() {
-                isBook=true;
-              });
-              widget._bookMarkList.addAlbum(album);
-              Provider.of<AlbumViewModel>(context,listen: false).album?.changeBookMark();
-              print("BOOK = "+ widget._bookMarkList.albumList.toString());
-
-            }, icon: isBook
-    ? Icon(Icons.bookmark_add_outlined, color: Colors.red,)
-          : Icon(Icons.bookmark_add_outlined)),
-
+                      print("BOOK = " +
+                          widget._bookMarkList.albumList.toString());
+                    },
+              icon: isBook
+                  ? const Icon(
+                      Icons.bookmark_add_outlined,
+                      color: Colors.red,
+                    )
+                  : const Icon(Icons.bookmark_add_outlined)),
         ],
       ),
     );
@@ -114,7 +106,6 @@ class _AlbumListWidgetState extends State<AlbumListWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
       child: Column(children: <Widget>[
         ListView.separated(
@@ -127,7 +118,6 @@ class _AlbumListWidgetState extends State<AlbumListWidget> {
           },
           itemBuilder: (BuildContext context, int index) {
             Album data = widget._albumList[index];
-
 
             return InkWell(
               onTap: () {

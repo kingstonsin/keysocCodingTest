@@ -17,7 +17,8 @@ class _BookMarkState extends State<BookMark> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BookMarked List'),
+          centerTitle: true,
+        title: const Text('BookMarked List'),
         leading: ElevatedButton(onPressed: () {
           Navigator.pop(context);
         },
@@ -69,9 +70,10 @@ Widget _buildItem(Album album){
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+
                 Text(
-                  //TODO
-                  album.trackName ?? '',
+
+                  album.artistName?? '',
                   style: TextStyle(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600,
@@ -83,7 +85,7 @@ Widget _buildItem(Album album){
                   height: 6,
                 ),
                 Text(
-                  album.artistName ?? '',
+                  album.primaryGenreName ?? '',
                   style: TextStyle(
                     fontSize: 12.0,
                     fontWeight: FontWeight.w400,

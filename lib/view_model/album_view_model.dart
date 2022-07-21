@@ -5,10 +5,9 @@ import 'package:keysoc_coding_test/model/apis/api_response.dart';
 
 class AlbumViewModel with ChangeNotifier {
   ApiResponse _apiResponse = ApiResponse.initial('Empty data');
-  // AlbumList? _albumList;
   Album? _album;
 
-  AlbumViewModel(){
+  AlbumViewModel() {
     fetchAlbumData("jack+johnson&entity=album");
   }
 
@@ -19,11 +18,6 @@ class AlbumViewModel with ChangeNotifier {
   Album? get album {
     return _album;
   }
-
-  // AlbumList? get albumList{
-  //   return _albumList;
-  // }
-
 
   Future<void> fetchAlbumData(String value) async {
     _apiResponse = ApiResponse.loading('Fetching artist data');
@@ -43,24 +37,8 @@ class AlbumViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeBookMarked(Album? album){
+  void changeBookMarked(Album? album) {
     album?.changeBookMark();
     notifyListeners();
   }
-  //
-  // void setSelectedAlbumList(AlbumList? albumList) {
-  //   _albumList = albumList;
-  //   notifyListeners();
-  // }
-  //
-  // void addAlbumtoList(Album album){
-  //   _albumList?.addAlbum(album);
-  //   notifyListeners();
-  // }
-  //
-  // void deleteAlbumtoList(Album album){
-  //   _albumList?.deleteAlbum(album);
-  //   notifyListeners();
-  // }
-
 }

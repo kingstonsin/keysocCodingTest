@@ -10,7 +10,7 @@ class AlbumRepository {
     dynamic response = await _albumService.getResponse(value);
     final jsonData = response['results'] as List;
     List albumList =
-    jsonData.map((tagJson) => Album.fromJson(tagJson)).toList();
+        jsonData.map((tagJson) => Album.fromJson(tagJson)).toList();
     return albumList;
   }
 }

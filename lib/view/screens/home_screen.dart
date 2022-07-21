@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keysoc_coding_test/model/album.dart';
 import 'package:keysoc_coding_test/model/albumList.dart';
@@ -17,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   AlbumList bookMarkList = AlbumList();
   Widget getAlbumWidget(BuildContext context, ApiResponse apiResponse) {
     List<Album>? albumList = apiResponse.data as List<Album>?;
@@ -34,18 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: AlbumListWidget(albumList!, (Album album) {
                 Provider.of<AlbumViewModel>(context, listen: false)
                     .setSelectedAlbum(album);
-              },bookMarkList),
-            ),
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                // child: PlayerWidget(
-                //   function: () {
-                //     setState(() {});
-                //   },
-                // ),
-              ),
+              }, bookMarkList),
             ),
           ],
         );
@@ -65,65 +52,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // final _inputController = TextEditingController();
 
-
-
     ApiResponse apiResponse = Provider.of<AlbumViewModel>(context).response;
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Album List'),
-        leading: ElevatedButton(onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (BuildContext context) {
-            return BookMark(bookMarkList: bookMarkList);
-          })
-          );
-        },
-        child: Icon(Icons.bookmark),),
+        leading: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (BuildContext context) {
+              return BookMark(bookMarkList: bookMarkList);
+            }));
+          },
+          child: const Icon(Icons.bookmark_outlined),
+        ),
       ),
       body: Column(
         children: <Widget>[
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(vertical: 10.0),
-          //   child: Row(
-          //     children: <Widget>[
-          //       Expanded(
-          //         child: Container(
-          //           margin: EdgeInsets.symmetric(horizontal: 20.0),
-          //           decoration: BoxDecoration(
-          //             color: Theme.of(context).colorScheme.secondary.withAlpha(50),
-          //             borderRadius: BorderRadius.circular(30.0),
-          //           ),
-          //           child: TextField(
-          //               style: TextStyle(
-          //                 fontSize: 15.0,
-          //                 color: Colors.grey,
-          //               ),
-          //               controller: _inputController,
-          //               onChanged: (value) {},
-          //               onSubmitted: (value) {
-          //                 if (value.isNotEmpty) {
-          //                   Provider.of<AlbumViewModel>(context, listen: false)
-          //                       .setSelectedAlbum(null);
-          //                   Provider.of<AlbumViewModel>(context, listen: false)
-          //                       .fetchAlbumData(value);
-          //                 }
-          //               },
-          //               decoration: InputDecoration(
-          //                 border: InputBorder.none,
-          //                 enabledBorder: InputBorder.none,
-          //                 focusedBorder: InputBorder.none,
-          //                 prefixIcon: Icon(
-          //                   Icons.search,
-          //                   color: Colors.grey,
-          //                 ),
-          //                 hintText: 'Enter Artist Name',
-          //               )),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Expanded(child: getAlbumWidget(context, apiResponse)),
         ],
       ),
